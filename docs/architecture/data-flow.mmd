@@ -1,0 +1,38 @@
+sequenceDiagram
+    participant U as 사용자
+    participant W as Web (Next.js)
+    participant A as API Layer
+    participant DB as Database
+    participant SE as 검색엔진
+
+    Note over U,SE: 1. 검색엔진 유입 흐름
+    SE->>W: 크롤링 (sitemap.xml)
+    W->>A: SSG 빌드 시 데이터 요청
+    A->>DB: 도구 목록 쿼리
+    DB-->>A: 도구 데이터
+    A-->>W: JSON 응답
+    W-->>SE: HTML + Structured Data
+
+    Note over U,SE: 2. 사용자 탐색 흐름
+    U->>W: 홈페이지 방문
+    W->>A: 인기 도구 / 카테고리 요청
+    A->>DB: 쿼리
+    DB-->>A: 결과
+    A-->>W: 데이터
+    W-->>U: 렌더링된 페이지
+
+    Note over U,SE: 3. 검색 흐름
+    U->>W: 검색어 입력
+    W->>A: GET /api/tools?search=query
+    A->>DB: FTS 쿼리
+    DB-->>A: 검색 결과
+    A-->>W: 결과 목록
+    W-->>U: 검색 결과 페이지
+
+    Note over U,SE: 4. 도구 상세 흐름
+    U->>W: /tools/{slug} 접속
+    W->>A: 도구 상세 요청
+    A->>DB: 슬러그로 조회
+    DB-->>A: 도구 상세 데이터
+    A-->>W: 상세 정보 + 관련 도구
+    W-->>U: 도구 상세 페이지 + AdSense 슬롯 + Affiliate 링크

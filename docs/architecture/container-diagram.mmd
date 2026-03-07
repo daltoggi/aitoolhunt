@@ -1,0 +1,36 @@
+graph TB
+    subgraph Client["클라이언트"]
+        Browser["🌐 웹 브라우저"]
+    end
+
+    subgraph Vercel["Vercel Platform"]
+        subgraph WebPkg["packages/web (Next.js 15)"]
+            Pages["📄 Pages<br/>(App Router)"]
+            ServerComponents["⚡ Server Components"]
+            ClientComponents["🖥️ Client Components"]
+            APIRoutes["🔌 API Route Handlers"]
+        end
+    end
+
+    subgraph Packages["Internal Packages"]
+        APIPkg["📦 packages/api<br/>(Business Logic)"]
+        SharedPkg["📦 packages/shared<br/>(Types & Utils)"]
+        UIPkg["📦 packages/ui<br/>(UI Components)"]
+    end
+
+    subgraph Data["Data Layer"]
+        SQLite[("💾 SQLite/Turso<br/>Database")]
+        SeedData["📋 Seed Data<br/>(JSON)"]
+    end
+
+    Browser --> Pages
+    Pages --> ServerComponents
+    Pages --> ClientComponents
+    ClientComponents --> APIRoutes
+    ServerComponents --> APIPkg
+    APIRoutes --> APIPkg
+    APIPkg --> SharedPkg
+    UIPkg --> SharedPkg
+    ClientComponents --> UIPkg
+    APIPkg --> SQLite
+    SeedData -.->|초기 데이터| SQLite

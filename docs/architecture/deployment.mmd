@@ -1,0 +1,38 @@
+graph TB
+    subgraph Development["개발 환경"]
+        LocalDev["💻 로컬 개발<br/>(pnpm dev)"]
+        LocalDB[("SQLite<br/>local.db")]
+        LocalDev --> LocalDB
+    end
+
+    subgraph CI["CI/CD"]
+        GitHub["📦 GitHub Repo"]
+        VercelCI["⚡ Vercel Build"]
+        Tests["🧪 테스트 실행"]
+        GitHub -->|push| VercelCI
+        VercelCI --> Tests
+    end
+
+    subgraph Production["프로덕션 환경"]
+        subgraph VercelEdge["Vercel Edge Network"]
+            CDN["🌐 CDN<br/>(전세계 Edge)"]
+            ServerlessFn["⚡ Serverless Functions<br/>(API Routes)"]
+            StaticAssets["📁 Static Assets<br/>(ISR/SSG Pages)"]
+        end
+        TursoDB[("☁️ Turso<br/>LibSQL Cloud")]
+
+        CDN --> StaticAssets
+        CDN --> ServerlessFn
+        ServerlessFn --> TursoDB
+    end
+
+    LocalDev -->|git push| GitHub
+    Tests -->|pass| CDN
+
+    subgraph External["외부 서비스"]
+        AdSense["📊 Google AdSense"]
+        VercelAnalytics["📈 Vercel Analytics"]
+    end
+
+    CDN -.-> AdSense
+    CDN -.-> VercelAnalytics

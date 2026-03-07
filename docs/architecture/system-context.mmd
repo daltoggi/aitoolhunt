@@ -1,0 +1,23 @@
+graph TB
+    User[/"👤 사용자<br/>(웹 브라우저)"/]
+    Admin[/"🔧 관리자"/]
+    SearchEngine[/"🔍 검색엔진<br/>(Google, Bing)"/]
+
+    subgraph AIT["AI Tool Directory System"]
+        WebApp["🌐 Web Application<br/>(Next.js 15)"]
+        APILayer["⚙️ API Layer<br/>(Route Handlers)"]
+        DB[("💾 Database<br/>(SQLite/Turso)")]
+    end
+
+    AdSense["📊 Google AdSense"]
+    AffiliatePartners["🤝 Affiliate Partners<br/>(AI Tool Providers)"]
+    Analytics["📈 Analytics<br/>(Vercel Analytics)"]
+
+    User -->|검색/탐색| WebApp
+    Admin -->|데이터 관리| WebApp
+    SearchEngine -->|크롤링/인덱싱| WebApp
+    WebApp --> APILayer
+    APILayer --> DB
+    WebApp -.->|광고 표시| AdSense
+    WebApp -.->|제휴 링크| AffiliatePartners
+    WebApp -.->|사용 추적| Analytics
