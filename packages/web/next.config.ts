@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
     ],
   },
   serverExternalPackages: ['better-sqlite3'],
+  // Skip ESLint during build — ESLint v10 flat config conflicts with
+  // Next.js legacy eslintrc integration. Lint runs via `pnpm lint` instead.
+  eslint: { ignoreDuringBuilds: true },
   webpack: (config, { isServer }) => {
     if (isServer) {
       // Mark better-sqlite3 as commonjs external for both dev and SSG build.
@@ -18,7 +21,10 @@ const nextConfig: NextConfig = {
       const existingExternals = config.externals || [];
       config.externals = [
         ...(Array.isArray(existingExternals) ? existingExternals : []),
-        ({ request }: { request?: string }, callback: (err?: Error | null, result?: string) => void) => {
+        (
+          { request }: { request?: string },
+          callback: (err?: Error | null, result?: string) => void,
+        ) => {
           if (request === 'better-sqlite3') {
             return callback(null, `commonjs ${request}`);
           }
