@@ -2,7 +2,7 @@
 
 **최종 업데이트**: 2026-03-08
 **프로젝트**: AI Tool Directory (aitoolhunt)
-**상태**: MVP 구현 완료, 배포 준비 중
+**상태**: MVP 구현 완료, GitHub push 및 Vercel 배포 대기
 
 ---
 
@@ -37,7 +37,7 @@
 | DB | SQLite (better-sqlite3) + Drizzle ORM |
 | Build | Turborepo, pnpm 10 |
 | Test | Vitest (14 tests passing) |
-| Deploy | Vercel (예정) |
+| Deploy | Vercel (대기 중) |
 
 ## 완료된 작업
 
@@ -77,12 +77,28 @@
 - AdSense 통합 가이드
 - 사용자 가이드
 
+### Phase 6: 버그 수정 ✅
+- better-sqlite3 네이티브 모듈 dev 모드 로딩 이슈 해결
+  - ESM import → require() 전환 (네이티브 C++ 모듈 호환)
+  - webpack externals 명시적 설정 추가
+- 프로덕션 빌드 & dev 서버 모두 정상 동작 확인
+- local.db를 Git에 포함 (Vercel 서버리스 배포용)
+
 ## 남은 작업
 
-### 즉시 필요
-1. **GitHub 저장소 생성** - daltoggi 계정에 push
-2. **Vercel 배포** - 사용자가 계정 생성 후 연동 필요
-3. **DB 파일 관리** - 빌드 시 local.db 포함 전략
+### 즉시 필요 (사용자 액션)
+1. **GitHub 인증** - `gh auth login` 실행 후 daltoggi 계정 인증
+2. **GitHub 저장소 생성 & push** - 아래 명령어 실행:
+   ```bash
+   gh repo create daltoggi/aitoolhunt --public --source=. --remote=origin --push
+   ```
+3. **Vercel 배포** - https://vercel.com 에서:
+   - GitHub 계정 연동
+   - daltoggi/aitoolhunt 리포 import
+   - Framework: Next.js (자동 감지)
+   - Root Directory: `packages/web`
+   - Build Command: `cd ../.. && pnpm install && pnpm --filter @aitoolhunt/web build`
+   - Output Directory: `.next`
 
 ### 향후 (Phase 2)
 1. Turso(LibSQL cloud) 마이그레이션 → SSG/ISR 전환
@@ -101,13 +117,17 @@
 | force-dynamic over SSG | better-sqlite3 빌드 호환 문제 회피 |
 | Next.js API Routes over Fastify | 단일 배포, 무료 tier 최대 활용 |
 | Drizzle over Prisma | 경량, Edge 호환, TypeScript 네이티브 |
+| require() over ESM import | 네이티브 C++ 모듈 webpack 호환성 |
+| local.db Git 포함 | Vercel 서버리스에서 시드 불가 |
 
 ## 리스크 현황
 
 | 리스크 | 심각도 | 상태 |
 |--------|--------|------|
-| better-sqlite3 빌드 이슈 | 높음 | 해결 (dynamic 전환) |
+| better-sqlite3 빌드 이슈 | 높음 | ✅ 해결 (dynamic 전환 + require()) |
+| better-sqlite3 dev 모드 | 높음 | ✅ 해결 (require + webpack externals) |
 | Vercel 계정 필요 | 중간 | 사용자 액션 필요 |
+| GitHub 인증 필요 | 중간 | 사용자 액션 필요 |
 | 데이터 정확성 | 중간 | 수동 검증 완료 |
 
 ## 파일 구조 요약
@@ -134,3 +154,8 @@ exit 2/
 ├── turbo.json
 └── tsconfig.base.json
 ```
+
+## Git 커밋 히스토리
+1. `feat: AI Tool Hunt MVP - complete monorepo setup with 47 AI tools`
+2. `fix: resolve better-sqlite3 native module loading in Next.js dev mode`
+3. `chore: include local.db for Vercel deployment and update gitignore`
