@@ -13,11 +13,18 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['better-sqlite3'],
   webpack: (config, { isServer }) => {
     if (isServer) {
-      // Ensure better-sqlite3 is treated as external in dev mode
-      config.externals = config.externals || [];
-      if (Array.isArray(config.externals)) {
-        config.externals.push('better-sqlite3');
-      }
+      // Mark better-sqlite3 as commonjs external for both dev and SSG build.
+      // Native C++ addons must be loaded via Node.js require, not webpack.
+      const existingExternals = config.externals || [];
+      config.externals = [
+        ...(Array.isArray(existingExternals) ? existingExternals : []),
+        ({ request }: { request?: string }, callback: (err?: Error | null, result?: string) => void) => {
+          if (request === 'better-sqlite3') {
+            return callback(null, `commonjs ${request}`);
+          }
+          callback();
+        },
+      ];
     }
     return config;
   },

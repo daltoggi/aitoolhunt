@@ -48,3 +48,4 @@ npm-debug.log*
 
 # Sensitive
 Resource_Map*
+.vercel

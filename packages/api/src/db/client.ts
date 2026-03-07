@@ -4,8 +4,9 @@ import type BetterSqlite3 from 'better-sqlite3';
 
 import * as schema from './schema';
 
-// Use require() for better-sqlite3 because it's a native C++ addon.
-// ESM import breaks in webpack dev mode (default export becomes undefined).
+// Use require() for better-sqlite3 — it's a native C++ addon that breaks
+// with ESM import in webpack. This file is only used via Next.js (webpack),
+// which provides require() globally. Scripts use their own createRequire.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const Database = require('better-sqlite3') as typeof BetterSqlite3;
 

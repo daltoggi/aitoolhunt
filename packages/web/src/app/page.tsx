@@ -3,7 +3,7 @@ import { ToolCard, CategoryCard, AdSlot } from '@aitoolhunt/ui';
 import { AD_SLOTS } from '@aitoolhunt/shared';
 import { HomeSearch } from '@/components/home-search';
 
-export const dynamic = 'force-dynamic';
+// Statically generated at build time
 
 export default async function HomePage() {
   const toolService = getToolService();

@@ -2,8 +2,7 @@ import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@aitoolhunt/shared';
 import { getToolService, getCategoryService } from '@/lib/db';
 
-export const dynamic = 'force-dynamic';
-
+// Generated at build time
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const toolService = getToolService();
   const categoryService = getCategoryService();

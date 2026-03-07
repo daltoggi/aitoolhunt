@@ -3,7 +3,7 @@ import { getCategoryService } from '@/lib/db';
 import { CategoryCard } from '@aitoolhunt/ui';
 import { generateCategoryTitle } from '@aitoolhunt/shared';
 
-export const dynamic = 'force-dynamic';
+// Statically generated at build time
 
 export const metadata: Metadata = {
   title: 'Browse AI Tool Categories',

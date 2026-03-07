@@ -1,9 +1,10 @@
+import { createRequire } from 'module';
 import type BetterSqlite3 from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const Database = require('better-sqlite3') as typeof BetterSqlite3;
 import { eq } from 'drizzle-orm';
+
+const esmRequire = createRequire(import.meta.url);
+const Database = esmRequire('better-sqlite3') as typeof BetterSqlite3;
 
 import * as schema from '../db/schema';
 import { seedCategories, seedTools } from './data';

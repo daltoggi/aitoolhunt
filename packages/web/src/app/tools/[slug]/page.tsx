@@ -38,9 +38,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-// Dynamic rendering - generateStaticParams removed for native module compatibility
-// Re-enable SSG when migrating to Turso (cloud DB)
-export const dynamic = 'force-dynamic';
+export async function generateStaticParams() {
+  const toolService = getToolService();
+  const slugs = await toolService.getToolSlugs();
+  return slugs.map(({ slug }) => ({ slug }));
+}
 
 export default async function ToolPage({ params }: PageProps) {
   const { slug } = await params;

@@ -25,7 +25,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export const dynamic = 'force-dynamic';
+export async function generateStaticParams() {
+  const categoryService = getCategoryService();
+  const slugs = await categoryService.getCategorySlugs();
+  return slugs.map(({ slug }) => ({ slug }));
+}
 
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params;
