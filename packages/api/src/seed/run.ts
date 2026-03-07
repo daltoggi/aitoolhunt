@@ -1,5 +1,8 @@
-import Database from 'better-sqlite3';
+import type BetterSqlite3 from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const Database = require('better-sqlite3') as typeof BetterSqlite3;
 import { eq } from 'drizzle-orm';
 
 import * as schema from '../db/schema';
