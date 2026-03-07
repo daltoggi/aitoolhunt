@@ -19,7 +19,11 @@ build/
 # Database
 *.db
 *.db-journal
+*.db-wal
+*.db-shm
 *.sqlite
+# Allow the production DB to be committed for Vercel deployment
+!packages/web/local.db
 
 # IDE
 .idea/
