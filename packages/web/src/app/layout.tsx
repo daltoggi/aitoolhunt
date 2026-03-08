@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
+  verification: {
+    google: 'olOQOSNtyIOXkEXO2Q9s2V8nh5sy_lHlaXWLLzTwEmw',
+  },
   openGraph: {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
@@ -34,11 +37,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased">
@@ -106,9 +105,7 @@ function Footer() {
             </div>
             <span className="text-sm font-semibold text-gray-900">AI Tool Hunt</span>
           </div>
-          <p className="text-sm text-gray-500">
-            Discover the best AI tools for every task.
-          </p>
+          <p className="text-sm text-gray-500">Discover the best AI tools for every task.</p>
           <nav className="flex gap-4">
             <a href="/about" className="text-sm text-gray-500 hover:text-gray-900">
               About
