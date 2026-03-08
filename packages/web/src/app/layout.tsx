@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from '@aitoolhunt/shared';
 import './globals.css';
 
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="min-h-[calc(100vh-140px)]">{children}</main>
         <Footer />
       </body>
+      <GoogleAnalytics gaId="G-462M3QCJML" />
     </html>
   );
 }
