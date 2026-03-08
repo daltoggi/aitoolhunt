@@ -112,8 +112,8 @@ function Footer() {
             <a href="/about" className="text-sm text-gray-500 hover:text-gray-900">
               About
             </a>
-            <a href="/contact" className="text-sm text-gray-500 hover:text-gray-900">
-              Contact
+            <a href="/privacy" className="text-sm text-gray-500 hover:text-gray-900">
+              Privacy
             </a>
           </nav>
         </div>
